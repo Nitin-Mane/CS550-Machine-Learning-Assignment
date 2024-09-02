@@ -10,7 +10,7 @@
 \usepackage{listings}
 \usepackage{lmodern}
 \usepackage{minted}
-
+\usepackage{hyperref}
 \pointsdroppedatright
 \marksnotpoints
 \makeatletter
@@ -877,13 +877,11 @@ These boxplots show the distribution of the data before and after scaling. After
 
 \subsubsection{GitHub Link}
 
-Please refer to the following GitHub repository for the complete code and output in the `.ipynb` file:
+Please refer to the following GitHub repository for the complete code and output in the \texttt{.ipynb} file:
 
-\begin{verbatim}
-[GitHub Link](https://github.com/username/repository_name)
-\end{verbatim}
+\href{https://github.com/Nitin-Mane/CS550-Machine-Learning-Assignment/tree/main/Assignment_03}{GitHub Link}
 
-\textbf{Note:} The GitHub link must be accessible for evaluation.
+\textbf{Note:} Please check the Notebook filename: \texttt{NitinMane\_M24MT004\_Assignment01.ipynb}
 
 \section{Question 05}
 
@@ -1006,14 +1004,14 @@ This transformation ensures that \( \mathbf{z}(t) \) is uncorrelated with unit v
 The key goal of ICA is to estimate the mixing matrix \( \mathbf{A} \). This is done by finding a matrix \( \mathbf{W} \) such that the components of \( \mathbf{W} \mathbf{z}(t) \) are as independent as possible. The FastICA algorithm is a commonly used method, which involves the following steps:
 
 \begin{enumerate}
-    \item **Choose an initial guess** for the matrix \( \mathbf{W} \).
-    \item **Iteratively update** \( \mathbf{W} \) using the following rule:
+    \item\textbf{Choose an initial guess} for the matrix \( \mathbf{W} \).
+    \item \textbf{Iteratively update} \( \mathbf{W} \) using the following rule:
     \[
     \mathbf{w}_{\text{new}} = \mathbb{E}[\mathbf{z}(t) g(\mathbf{w}^\top \mathbf{z}(t))] - \mathbb{E}[g'(\mathbf{w}^\top \mathbf{z}(t))] \mathbf{w}
     \]
     where \( g(\cdot) \) is a non-linear function (e.g., \( g(u) = \tanh(u) \)), and \( g'(u) \) is its derivative.
-    \item **Normalize** \( \mathbf{w}_{\text{new}} \) to have unit norm.
-    \item **Check for convergence**: If the change in \( \mathbf{W} \) is below a threshold, the algorithm has converged.
+    \item \textbf{Normalize} \( \mathbf{w}_{\text{new}} \) to have unit norm.
+    \item \textbf{Check for convergence}: If the change in \( \mathbf{W} \) is below a threshold, the algorithm has converged.
 \end{enumerate}
 
 The resulting matrix \( \mathbf{W} \) is the estimated unmixing matrix, and its inverse gives the estimated mixing matrix:
@@ -1037,8 +1035,6 @@ Since \( \mathbf{z}(t) = \mathbf{D}^{-1/2} \mathbf{E}^\top \mathbf{x}_{\text{cen
 \]
 
 Thus, \( \mathbf{s}(t) \) is recovered by applying the estimated unmixing matrix to the whitened, centered data.
-
-\textbf{Conclusion:}
 
 The process of ICA involves centering and whitening the observed data, estimating the mixing matrix using FastICA, and recovering the independent source signals. This process hinges on the statistical independence and non-Gaussianity of the source signals.
 
@@ -1127,14 +1123,14 @@ The core of ICA is estimating the mixing matrix \( \mathbf{A} \). This is done b
 Using the FastICA algorithm, the following steps are performed:
 
 \begin{enumerate}
-    \item **Initialize** \( \mathbf{W} \) with a random guess.
-    \item **Iterative Update**: Update \( \mathbf{W} \) using:
+    \item \textbf{Initialize} \( \mathbf{W} \) with a random guess.
+    \item \textbf{Iterative Update}: Update \( \mathbf{W} \) using:
     \[
     \mathbf{w}_{\text{new}} = \mathbb{E}[\mathbf{z}(t) g(\mathbf{w}^\top \mathbf{z}(t))] - \mathbb{E}[g'(\mathbf{w}^\top \mathbf{z}(t))] \mathbf{w}
     \]
     where \( g(\cdot) \) is a non-linear function, commonly \( g(u) = \tanh(u) \), and \( g'(u) \) is its derivative.
-    \item **Normalize** \( \mathbf{w}_{\text{new}} \) to have unit norm.
-    \item **Check Convergence**: The process continues until the change in \( \mathbf{W} \) is sufficiently small.
+    \item \textbf{Normalize} \( \mathbf{w}_{\text{new}} \) to have unit norm.
+    \item \textbf{Check Convergence}: The process continues until the change in \( \mathbf{W} \) is sufficiently small.
 \end{enumerate}
 
 The estimated unmixing matrix \( \mathbf{W} \) is related to the mixing matrix by:
@@ -1156,8 +1152,6 @@ Since \( \mathbf{z}(t) = \mathbf{D}^{-1/2} \mathbf{E}^\top \mathbf{x}_{\text{cen
 \]
 
 \textbf{Detailed Analysis:} The final recovery of the source signals \( \mathbf{s}(t) \) involves applying the estimated unmixing matrix \( \mathbf{W} \) to the whitened data. This step completes the ICA process by providing the best estimate of the original independent signals.
-
-\textbf{Conclusion:}
 
 The ICA process involves centering the data, whitening the signals to remove correlations and standardize the variance, estimating the mixing matrix using the FastICA algorithm, and finally recovering the independent source signals. Each step is crucial for accurately separating the observed mixtures into their original independent components.
 
