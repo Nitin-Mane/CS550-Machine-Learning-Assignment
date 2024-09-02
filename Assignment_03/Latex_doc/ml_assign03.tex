@@ -1,8 +1,11 @@
 \documentclass{exam}
+\usepackage{lmodern}
+\usepackage{fix-cm}
 \usepackage[fontsize=12pt]{scrextend}
 \usepackage{xpatch}
 \usepackage{babel}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{booktabs}
@@ -11,6 +14,8 @@
 \usepackage{lmodern}
 \usepackage{minted}
 \usepackage{hyperref}
+
+
 \pointsdroppedatright
 \marksnotpoints
 \makeatletter
@@ -35,7 +40,7 @@
 \begin{document}
 
 \begin{center}
-\textbf{CS550/DSL501: Machine Learning (2023--24--M)} \\
+\textbf{CS550/DSL501: Machine Learning (2024--25--M)} \\
 \textbf{Assignment-I}
 \end{center}
 
@@ -461,11 +466,21 @@ In the final step, we visualize the clusters by coloring the observations accord
 
 \begin{minted}[frame=lines, linenos, breaklines]{python}
 # Plot final clusters
+plt.subplot(1, 2, 1)  # 2D plot of the final clusters
 plt.scatter(data[:, 0], data[:, 1], c=cluster_labels)
 plt.scatter(centroids[:, 0], centroids[:, 1], c='red', marker='x')
-plt.title('Final Cluster Assignments')
+plt.title('Final Cluster Assignments (2D)')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
+
+plt.subplot(1, 2, 2)  # 1D plot of the final clusters (projected onto x-axis)
+plt.scatter(data[:, 0], np.zeros_like(data[:, 0]), c=cluster_labels)
+plt.scatter(centroids[:, 0], np.zeros_like(centroids[:, 0]), c='red', marker='x')
+plt.title('Final Cluster Assignments (1D)')
+plt.xlabel('Feature 1')
+
+plt.tight_layout()
+plt.savefig('./images/final_clusters_2D_1D.jpg')  # Save the combined 2D and 1D clusters as a JPG file
 plt.show()
 \end{minted}
 
@@ -473,7 +488,7 @@ plt.show()
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/final_clusters.jpg}
+    \includegraphics[width=0.6\textwidth]{images/final_clusters_2D_1D.jpg}
     \caption{Final Cluster Visualization}
     \label{fig:final_cluster_visualization}
 \end{figure}
@@ -804,13 +819,13 @@ from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler()
 
 # Scale all features except for 'quality'
-scaled_features = scaler.fit_transform(df.drop(columns=['quality']))
+scaled_features = scaler.fit_transform(wine_data.drop(columns=['quality']))
 
 # Convert the scaled features back to a DataFrame
-df_scaled = pd.DataFrame(scaled_features, columns=df.columns[:-1])
+df_scaled = pd.DataFrame(scaled_features, columns=wine_data.columns[:-1])
 
 # Add the 'quality' column back to the scaled DataFrame
-df_scaled['quality'] = df['quality']
+df_scaled['quality'] = wine_data['quality']
 
 # Display the first few rows of the scaled dataset
 print(df_scaled.head())
@@ -959,7 +974,7 @@ where
 where \( \mathbf{A} \) is an unknown \( 3 \times 3 \) mixing matrix, and \( \mathbf{s}(t) \) represents the independent source signals.
 \end{quote}
 
-\subsection{(a) Explain the steps involved in estimating the mixing matrix \(\mathbf{A}\) and the independent source signals \(\mathbf{s}(t)\) using ICA.}
+\subsection{(a) Explain the steps involved in estimating the mixing matrix \texorpdfstring{$\mathbf{A}$}{A} and the independent source signals \texorpdfstring{$\mathbf{s}(t)$}{s(t)} using ICA.}
 
 \textbf{Answer:}
 
@@ -999,7 +1014,7 @@ where \( \mathbf{E} \) is the matrix of eigenvectors, and \( \mathbf{D} \) is th
 
 This transformation ensures that \( \mathbf{z}(t) \) is uncorrelated with unit variance.
 
-\subsubsection{Step 3: Estimating the Mixing Matrix \(\mathbf{A}\)}
+\subsubsection{Step 3: Estimating the Mixing Matrix \texorpdfstring{$\mathbf{A}$}{A}}
 
 The key goal of ICA is to estimate the mixing matrix \( \mathbf{A} \). This is done by finding a matrix \( \mathbf{W} \) such that the components of \( \mathbf{W} \mathbf{z}(t) \) are as independent as possible. The FastICA algorithm is a commonly used method, which involves the following steps:
 
@@ -1020,7 +1035,7 @@ The resulting matrix \( \mathbf{W} \) is the estimated unmixing matrix, and its 
 \mathbf{A} \approx \mathbf{W}^{-1}
 \]
 
-\subsubsection{Step 4: Recovering the Source Signals \(\mathbf{s}(t)\)}
+\subsubsection{Step 4: Recovering the Source Signals \texorpdfstring{$\mathbf{s}(t)$}{s(t)}}
 
 Once the unmixing matrix \( \mathbf{W} \) is estimated, the independent source signals \( \mathbf{s}(t) \) can be recovered by:
 
@@ -1038,7 +1053,7 @@ Thus, \( \mathbf{s}(t) \) is recovered by applying the estimated unmixing matrix
 
 The process of ICA involves centering and whitening the observed data, estimating the mixing matrix using FastICA, and recovering the independent source signals. This process hinges on the statistical independence and non-Gaussianity of the source signals.
 
-\subsection{(b) Suppose the mixing matrix \(\mathbf{A}\) is not full rank (i.e., it is singular or nearly singular). How would this affect the ICA process? Discuss the potential challenges and the implications for recovering the original source signals.}
+\subsection{(b) Suppose the mixing matrix \texorpdfstring{$\mathbf{A}$}{A} is not full rank (i.e., it is singular or nearly singular). How would this affect the ICA process? Discuss the potential challenges and the implications for recovering the original source signals.}
 
 \textbf{Answer:}
 
